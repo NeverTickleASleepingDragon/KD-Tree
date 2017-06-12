@@ -4,8 +4,7 @@
 
 KDTree::KDTree(int bSize, int dim)
 {
-	/* Constructing KDTree */
-
+	std::cout << "Constructing Tree" << std::endl;
 	beginWith = dim;
 	bucketSize = bSize;
 }
@@ -17,7 +16,7 @@ void KDTree::Insert(Point2D *nPoint)
 {
 	if (root == NULL)
 	{
-		/* Creating a new Leaf Node and
+		/* Creating a new Leaf Node and 
 		inserting nPoint into the bucket*/
 
 		LeafNode *nLeaf = new LeafNode();
@@ -29,7 +28,7 @@ void KDTree::Insert(Point2D *nPoint)
 	}
 	else if (root->IsLeaf() && (signed)root->GetBucket().size() < bucketSize) //Checking if the root (leaf node) is not full
 	{
-		root->GetBucket().push_back(nPoint);
+		root->GetBucket().push_back(nPoint); 
 	}
 	else
 	{
@@ -44,7 +43,7 @@ void KDTree::Insert(Point2D *nPoint)
 
 			currentDimension = child->GetCuttingDimension();
 
-			if (child->GetCuttingValue() >= (*nPoint)[currentDimension])
+			if (child->GetCuttingValue() > (*nPoint)[currentDimension])
 			{
 				child = child->left;
 			}
@@ -54,7 +53,7 @@ void KDTree::Insert(Point2D *nPoint)
 			}
 		}
 
-		if ((signed)child->GetBucket().size() == bucketSize)
+		if ((signed)child->GetBucket().size() == bucketSize) 
 		{
 			/* If buffer is full, node needs to be split */
 
@@ -70,15 +69,15 @@ void KDTree::Insert(Point2D *nPoint)
 			{
 				nNonLeaf = new NonLeafNode((currentDimension + 1) % 2, 0);
 			}
-
+		
 			nNonLeaf->parent = child->parent; //Updating the parent of the new non-leaf node
 
 			/* Updating child's parent's left/right children to point to the new non-leaf node */
-			if (child->parent != NULL && child->parent->left == child)
+			if (child->parent!=NULL && child->parent->left == child) 
 			{
 				child->parent->left = nNonLeaf;
 			}
-			else if (child->parent != NULL)
+			else if (child->parent!=NULL)
 			{
 				child->parent->right = nNonLeaf;
 			}
@@ -87,13 +86,13 @@ void KDTree::Insert(Point2D *nPoint)
 			child->parent = nNonLeaf;
 
 			nNonLeaf->SplitChild(nPoint); //Split function is called-splits left child of the calling object to left and right children
-			//nNonLeaf->SetCuttingValue((*(nNonLeaf->left->GetBucket().back()))[currentDimension]); 
+			nNonLeaf->SetCuttingValue((*(nNonLeaf->left->GetBucket().back()))[currentDimension]); //The median is set as the cutting value
 		}
 		else
 		{
 			/* If the leaf is not full then new point is inserted */
 
-			child->GetBucket().push_back(nPoint);
+			child->GetBucket().push_back(nPoint); 
 		}
 	}
 }
