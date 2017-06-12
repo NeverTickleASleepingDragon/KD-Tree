@@ -1,12 +1,8 @@
 #include "KDTree.h"
 #include<conio.h>
-#include<fstream>
 int main()
 {
 	KDTree myTree(3, 0);
-	std::ifstream fin;
-	fin.open("data.txt", std::ios::in);
-
 
 	Point2D *p1 = new Point2D(2, 3);
 	Point2D *p2 = new Point2D(4, 3);
