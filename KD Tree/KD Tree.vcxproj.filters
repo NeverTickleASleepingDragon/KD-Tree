@@ -18,6 +18,9 @@
     <ClInclude Include="KDTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SyntheticDatasetGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Point2D.cpp">

@@ -1,5 +1,5 @@
 #include "KDTree.h"
-
+#define DIM 2
 /* Definition of class KDTree*/
 
 KDTree::KDTree(int bSize, int dim)
@@ -67,7 +67,7 @@ void KDTree::Insert(Point2D *nPoint)
 			}
 			else
 			{
-				nNonLeaf = new NonLeafNode((currentDimension + 1) % 2, 0);
+				nNonLeaf = new NonLeafNode((currentDimension + 1) % DIM, 0);
 			}
 		
 			nNonLeaf->parent = child->parent; //Updating the parent of the new non-leaf node
@@ -86,7 +86,7 @@ void KDTree::Insert(Point2D *nPoint)
 			child->parent = nNonLeaf;
 
 			nNonLeaf->SplitChild(nPoint); //Split function is called-splits left child of the calling object to left and right children
-			nNonLeaf->SetCuttingValue((*(nNonLeaf->left->GetBucket().back()))[currentDimension]); //The median is set as the cutting value
+			nNonLeaf->SetCuttingValue((*(nNonLeaf->left->GetBucket().back()))[nNonLeaf->GetCuttingDimension()]); //The median is set as the cutting value
 		}
 		else
 		{
