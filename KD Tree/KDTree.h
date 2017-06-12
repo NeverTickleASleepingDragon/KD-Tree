@@ -1,5 +1,10 @@
 #include<vector>
 #include<iostream>
+
+////////////////////////////////////////////////////////////////////////////////////////
+/* Point2D is a class of 2 dimensional points that can used to represent spatial data */
+////////////////////////////////////////////////////////////////////////////////////////
+
 class Point2D
 {
 	int x;
@@ -10,6 +15,12 @@ public:
 	const int operator[](int) const;
 	void Display();
 };
+
+//////////////////////////////////////////////////////
+/*	 Node is a class represents a node of the KD Tree.
+	It is of two types - leaf and non-leaf nodes	*/
+//////////////////////////////////////////////////////
+
 class Node
 {
 	
@@ -26,6 +37,11 @@ public:
 	virtual int GetCuttingDimension()=0;
 	virtual void SetCuttingValue(int) = 0;
 };
+
+////////////////////////////////////////////////////
+/* LeafNode represents a leaf node of the KD Tree */
+////////////////////////////////////////////////////
+
 class LeafNode : public Node
 {
 public:
@@ -45,10 +61,15 @@ public:
 	}
 	void SetCuttingValue(int dummy){}
 };
+
+////////////////////////////////////////////////////////////
+/* NonLeafNode represents an internal node in the KD Tree */
+////////////////////////////////////////////////////////////
+
 class NonLeafNode : public Node
 {
 public:
-	int cuttingDimention;
+	int cuttingDimension;
 	int cuttingValue;
 
 	NonLeafNode(){}
@@ -65,6 +86,11 @@ public:
 		return p;
 	}
 };
+
+///////////////////////////////////////////////
+/* The class that represents the tree itself */
+///////////////////////////////////////////////
+
 class KDTree
 {
 	Node *root;
@@ -78,5 +104,6 @@ public:
 	void Display(Node*);
 	Node* GetRoot();
 	void DeleteTree(Node*);
+	Point2D* NearestNeighbor(Point2D*);
 	~KDTree();
 };
