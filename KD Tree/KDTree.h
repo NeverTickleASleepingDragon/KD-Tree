@@ -47,7 +47,7 @@ class LeafNode : public Node
 {
 public:
 	std::vector<Point2D*> bucket;
-	LeafNode(){ std::cout << "Constructing LeafNode"<<std::endl; }
+	LeafNode(){ /* Constructing LeafNode */ }
 	bool IsLeaf();
 	std::vector<Point2D*>& GetBucket();
 	void Display();

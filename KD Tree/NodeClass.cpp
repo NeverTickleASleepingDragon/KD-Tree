@@ -133,9 +133,10 @@ void NonLeafNode::SplitChild(Point2D *nPoint)
 
 	LeafNode *nRightLeafNode = new LeafNode(); // new leaf node that contains the excess elements of the buffer
 
-	nRightLeafNode->bucket.assign(toSplit.begin() + toSplit.size() / 2 , toSplit.end()); //splits left child buffer and assigns it to the newly created leaf node
-	toSplit.resize(toSplit.size() / 2); //resizes left child
-	
+	nRightLeafNode->bucket.assign(toSplit.begin() + (toSplit.size() + 1) / 2 , toSplit.end()); //splits left child buffer and assigns it to the newly created leaf node
+	toSplit.resize((toSplit.size() + 1)/ 2); //resizes left child
+	cuttingValue = (*toSplit.back())[cuttingDimension]; //The median is set as the cutting value
+
 	nRightLeafNode->parent = this; 
 	right = nRightLeafNode; //newly created leaf node becomes right child
 }
