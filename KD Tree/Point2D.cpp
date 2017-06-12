@@ -22,6 +22,10 @@ const int Point2D::operator[](int dim)const
 	}
 	
 }
+int Point2D::EuclideanDistance(Point2D *A)
+{
+	return sqrt(pow((*A)[0] - (*this)[0], 2) + pow((*A)[1] - (*this)[1], 2));
+}
 void Point2D::Display()
 {
 	/* Display function of Point2D*/

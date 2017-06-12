@@ -41,15 +41,15 @@ void KDTree::Insert(Point2D *nPoint)
 		{
 			/* Travels till a leaf node by following Binary Search Tree properties */
 
+			currentDimension = child->GetCuttingDimension();
+
 			if (child->GetCuttingValue() > (*nPoint)[currentDimension])
 			{
 				child = child->left;
-				currentDimension = child->GetCuttingDimension();
 			}
 			else
 			{
 				child = child->right;
-				currentDimension = child->GetCuttingDimension();
 			}
 		}
 
@@ -62,7 +62,7 @@ void KDTree::Insert(Point2D *nPoint)
 			{
 				/* Updating the root */
 
-				nNonLeaf = new NonLeafNode((currentDimension) % 2, 0);
+				nNonLeaf = new NonLeafNode(beginWith, 0);
 				root = nNonLeaf;
 			}
 			else
@@ -71,6 +71,16 @@ void KDTree::Insert(Point2D *nPoint)
 			}
 		
 			nNonLeaf->parent = child->parent; //Updating the parent of the new non-leaf node
+
+			/* Updating child's parent's left/right children to point to the new non-leaf node */
+			if (child->parent!=NULL && child->parent->left == child) 
+			{
+				child->parent->left = nNonLeaf;
+			}
+			else if (child->parent!=NULL)
+			{
+				child->parent->right = nNonLeaf;
+			}
 
 			nNonLeaf->left = child; //The old, full leaf node becomes the newly created non-leaf node's left child-which is later split
 			child->parent = nNonLeaf;
@@ -107,6 +117,42 @@ void KDTree::Display(Node *disp)
 		disp->Display();
 		Display(disp->right);
 	}
+}
+Point2D* KDTree::NearestNeighbor(Point2D *queryPoint)
+{
+	/* Gives the nearest neighbor of the query point calculted by Euclidean distance */
+
+	Node* traverse = root; //Used to traverse the tree
+	int currentDimension = beginWith; //To keep track of the dimension of split at each level
+
+	while (!traverse->IsLeaf())
+	{
+		/* Travels till a leaf node by following Binary Search Tree properties */
+
+		if (traverse->GetCuttingValue() > (*queryPoint)[currentDimension])
+		{
+			traverse = traverse->left;
+			currentDimension = traverse->GetCuttingDimension();
+		}
+		else
+		{
+			traverse = traverse->right;
+			currentDimension = traverse->GetCuttingDimension();
+		}
+	}
+
+	int minDistance = -1;
+	std::vector<Point2D*>::iterator result;
+	for (std::vector<Point2D*>::iterator it = traverse->GetBucket().begin(); it != traverse->GetBucket().end(); it++)
+	{
+		int distance = queryPoint->EuclideanDistance(*it);
+		if (distance < minDistance || minDistance < 0)
+		{
+			minDistance = distance;
+			result = it;
+		}
+	}
+	return *result;
 }
 KDTree::~KDTree()
 {

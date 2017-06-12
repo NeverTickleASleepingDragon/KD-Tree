@@ -13,6 +13,7 @@ public:
 	Point2D(){}
 	Point2D(int, int);
 	const int operator[](int) const;
+	int EuclideanDistance(Point2D*);
 	void Display();
 };
 

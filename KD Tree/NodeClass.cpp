@@ -55,7 +55,7 @@ void LeafNode::Display()
 {
 	/* Leaf node display function-iteraters through the vector and calls the display function for each point */
 
-	std::cout << std::endl << "Leaf Node Display" << std::endl;
+	std::cout << std::endl << "Leaf Node Display";
 	for (std::vector<Point2D*>::iterator it = bucket.begin(); it != bucket.end(); it++)
 	{
 		(*it)->Display();
@@ -109,7 +109,7 @@ void NonLeafNode::Display()
 {
 	/* Non leaf node display function - displays cutting dimension and value */
 
-	std::cout << std::endl << "Non Leaf Node Display" << std::endl;
+	std::cout << "\n\nNon Leaf Node Display" << std::endl;
 	std::cout << "Cutting dimension= " << cuttingDimension<<std::endl;
 	std::cout << "Cuttting value= " << cuttingValue<<std::endl;
 }
