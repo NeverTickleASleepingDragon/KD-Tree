@@ -52,6 +52,7 @@ public:
 	std::vector<Point2D*>& GetBucket();
 	void Display();
 	~LeafNode();
+
 	int GetCuttingDimension()
 	{
 		return -1;

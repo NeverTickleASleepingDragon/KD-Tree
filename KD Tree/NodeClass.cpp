@@ -67,7 +67,7 @@ LeafNode::~LeafNode()
 
 	for (std::vector<Point2D*>::iterator it = bucket.begin(); it != bucket.end(); ++it)
 	{
-		delete *it;
+		delete (*it);
 	}
 }
 
