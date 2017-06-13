@@ -8,7 +8,7 @@
 	It considers a range of 0-100 for all dimensions */
 ///////////////////////////////////////////////////////
 
-void RamdomData(int dimension, int size)
+void RandomData(int dimension, int size)
 {
 	srand((unsigned)time(NULL));
 
