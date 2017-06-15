@@ -2,9 +2,9 @@
 #include<conio.h>
 #include<chrono>
 #include <fstream>
-unsigned long TimeInMicroseconds()
+unsigned long TimeInMilliseconds()
 {
-	return  std::chrono::duration_cast<std::chrono::microseconds>
+	return  std::chrono::duration_cast<std::chrono::milliseconds>
 		(std::chrono::system_clock::now().time_since_epoch()).count();
 
 }
@@ -45,9 +45,9 @@ int main()
 		}
 		qPoint = new Point2D(x, y);
 
-		unsigned long start = TimeInMicroseconds();
+		unsigned long start = TimeInMilliseconds();
 		point = myTree->NearestNeighbor(qPoint);
-		unsigned long end = TimeInMicroseconds();
+		unsigned long end = TimeInMilliseconds();
 
 		std::cout << "The nearest neighbor is\n";
 		point->Display();
