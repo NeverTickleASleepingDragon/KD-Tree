@@ -1,16 +1,23 @@
 #include "KDTree.h"
-#include "SyntheticDatasetGenerator.h"
 #include<conio.h>
+#include<chrono>
 #include <fstream>
+unsigned long TimeInMicroseconds()
+{
+	return  std::chrono::duration_cast<std::chrono::microseconds>
+		(std::chrono::system_clock::now().time_since_epoch()).count();
 
+}
 int main()
 {
-	//RandomData(2, 10000);
-	KDTree *myTree = new KDTree(4, 0);
+	KDTree *myTree = new KDTree(100000, 0);
 	Point2D* point;
 	int x, y;
 
+	
 	std::ifstream fin;
+	std::ofstream ans;
+
 	fin.open("data.txt");
 
 	while (1)
@@ -25,13 +32,34 @@ int main()
 	}
 	fin.close();
 
-	myTree->Display(myTree->GetRoot());
+	fin.open("query.txt");
+	ans.open("results.txt");
 
-	Point2D *qPoint = new Point2D(1, 1);
-	point = myTree->NearestNeighbor(qPoint);
-	std::cout << "\nThe nearest neighbor is\n";
-	point->Display();
+	Point2D *qPoint;
+	while (1)
+	{
+		fin >> x >> y;
+		if (fin.eof())
+		{
+			break;
+		}
+		qPoint = new Point2D(x, y);
 
+		unsigned long start = TimeInMicroseconds();
+		point = myTree->NearestNeighbor(qPoint);
+		unsigned long end = TimeInMicroseconds();
+
+		std::cout << "The nearest neighbor is\n";
+		point->Display();
+		ans << (*point)[0] << "\t" << (*point)[1] << "\t" << (end - start) << "\n";
+		std::cout << "	It took " << (end - start) << "  ms\n";
+
+		delete qPoint;
+	}
+	fin.close();
+	ans.close();
+
+	//myTree->Display(myTree->GetRoot());
 	delete myTree;
 	_getch();
 }

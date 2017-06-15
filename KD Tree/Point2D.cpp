@@ -30,7 +30,6 @@ void Point2D::Display()
 {
 	/* Display function of Point2D*/
 
-	std::cout << std::endl;
 	std::cout << "x=" << x;
 	std::cout << "y=" << y;
 }
