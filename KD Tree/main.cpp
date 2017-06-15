@@ -33,7 +33,7 @@ int main()
 	fin.close();
 
 	fin.open("query.txt");
-	ans.open("results.txt");
+	ans.open("resultsSquaredDistance.txt");
 
 	Point2D *qPoint;
 	while (1)
